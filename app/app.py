@@ -11,7 +11,7 @@ def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="SqlMy@07",  # 🔹 Replace with your actual MySQL password
+        password="Sqlpassword",  # 🔹 Replace with your actual MySQL password
         database="banking_system"
     )
 
@@ -104,3 +104,4 @@ def open_browser():
 if __name__ == '__main__':
     threading.Timer(1.5, open_browser).start()
     app.run(debug=True)
+
