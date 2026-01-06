@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <!-- Header -->
+            <div class="form-header mb-4">
+                <h2>Create New Account</h2>
+                <p>Add a new account for existing customer</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <form method="POST">
+                    <!-- Customer Selection -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Customer</label>
+                        <select class="form-control" name="cust_id" required>
+                            <option value="">-- Choose Customer --</option>
+                            {% for cust in customers %}
+                            <option value="{{ cust[0] }}">{{ cust[1] }} (ID: {{ cust[0] }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Account Type -->
+                    <div class="mb-3">
+                        <label class="form-label">Account Type</label>
+                        <div class="account-type-selector">
+                            <div class="type-option">
+                                <input type="radio" name="acc_type" value="SAVINGS" id="savings" checked>
+                                <label for="savings">
+                                    <span class="type-title">Savings Account</span>
+                                    <span class="type-desc">For personal savings</span>
+                                </label>
+                            </div>
+
+                            <div class="type-option">
+                                <input type="radio" name="acc_type" value="CURRENT" id="current">
+                                <label for="current">
+                                    <span class="type-title">Current Account</span>
+                                    <span class="type-desc">For business needs</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Initial Balance -->
+                    <div class="mb-3">
+                        <label class="form-label">Initial Balance (₹)</label>
+                        <input type="number" step="0.01" class="form-control" name="balance" 
+                               placeholder="Enter initial deposit amount" required min="0">
+                        <small class="form-text">Minimum balance recommended: ₹500</small>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Info Note -->
+            <div class="info-note mt-3">
+                <strong>Note:</strong> Account number will be automatically generated
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Header */
+    .form-header {
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+
+    .form-header h2 {
+        color: #1a1a1a;
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+        color: #666;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    /* Form Card */
+    .form-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 2rem;
+    }
+
+    /* Form Elements */
+    .form-label {
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        width: 100%;
+        background: #fff;
+        border: 1px solid #d0d0d0;
+        border-radius: 4px;
+        padding: 0.6rem 0.75rem;
+        color: #333;
+        font-size: 0.95rem;
+        transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #666;
+    }
+
+    .form-control::placeholder {
+        color: #999;
+    }
+
+    select.form-control {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        padding-right: 2.5rem;
+    }
+
+    /* Account Type Selector */
+    .account-type-selector {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .type-option {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .type-option input[type="radio"] {
+        display: none;
+    }
+
+    .type-option label {
+        display: block;
+        background: #fff;
+        border: 2px solid #d0d0d0;
+        border-radius: 4px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .type-option label:hover {
+        border-color: #999;
+        background: #fafafa;
+    }
+
+    .type-option input[type="radio"]:checked + label {
+        border-color: #333;
+        background: #f5f5f5;
+    }
+
+    .type-title {
+        display: block;
+        color: #1a1a1a;
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .type-desc {
+        display: block;
+        color: #666;
+        font-size: 0.85rem;
+    }
+
+    /* Form Text */
+    .form-text {
+        display: block;
+        margin-top: 0.4rem;
+        color: #666;
+        font-size: 0.85rem;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+        width: 100%;
+        background: #333;
+        border: none;
+        border-radius: 4px;
+        padding: 0.75rem;
+        color: white;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+        background: #1a1a1a;
+    }
+
+    .btn-submit:active {
+        background: #000;
+    }
+
+    /* Info Note */
+    .info-note {
+        background: #f8f8f8;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 0.875rem 1rem;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .info-note strong {
+        color: #333;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .form-card {
+            padding: 1.5rem;
+        }
+
+        .account-type-selector {
+            flex-direction: column;
+        }
+
+        .type-option {
+            min-width: 100%;
+        }
+    }
+</style>
+{% endblock %}

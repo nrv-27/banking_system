@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% block title %}Home - Banking System{% endblock %}
+
+{% block content %}
+<!-- Simple Professional Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <!-- Main Heading -->
+        <div class="text-center mb-5">
+            <h1 class="page-title mb-3">
+                <i class="fa-solid fa-building-columns me-2"></i>
+                Banking Management System
+            </h1>
+            <p class="page-subtitle">
+                Manage customers, accounts, and transactions efficiently and securely
+            </p>
+        </div>
+
+        <!-- Feature Cards Grid -->
+        <div class="row g-4 mb-5">
+            <!-- Customers Card -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h5 class="card-title">Customer Management</h5>
+                    <p class="card-description">View and manage all customer profiles</p>
+                    <a href="{{ url_for('customers') }}" class="btn btn-primary w-100">
+                        <i class="fa-solid fa-eye me-2"></i>View Customers
+                    </a>
+                </div>
+            </div>
+
+            <!-- Accounts Card -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h5 class="card-title">Account Overview</h5>
+                    <p class="card-description">Access and monitor all accounts</p>
+                    <a href="{{ url_for('accounts') }}" class="btn btn-success w-100">
+                        <i class="fa-solid fa-eye me-2"></i>View Accounts
+                    </a>
+                </div>
+            </div>
+
+            <!-- Transactions Card -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <h5 class="card-title">Transaction History</h5>
+                    <p class="card-description">Track all financial activities</p>
+                    <a href="{{ url_for('transactions') }}" class="btn btn-warning w-100">
+                        <i class="fa-solid fa-eye me-2"></i>View Transactions
+                    </a>
+                </div>
+            </div>
+
+            <!-- Make Transaction Card -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </div>
+                    <h5 class="card-title">New Transaction</h5>
+                    <p class="card-description">Deposit or withdraw funds</p>
+                    <a href="{{ url_for('make_transaction') }}" class="btn btn-dark w-100">
+                        <i class="fa-solid fa-plus me-2"></i>Make Transaction
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Features Section -->
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="info-card">
+                    <i class="fa-solid fa-shield-halved info-icon"></i>
+                    <h5 class="info-title">Secure</h5>
+                    <p class="info-description">Bank-level encryption for all transactions</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <i class="fa-solid fa-bolt info-icon"></i>
+                    <h5 class="info-title">Fast</h5>
+                    <p class="info-description">Real-time processing and updates</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <i class="fa-solid fa-headset info-icon"></i>
+                    <h5 class="info-title">Support</h5>
+                    <p class="info-description">24/7 customer assistance available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clean Professional Styling -->
+<style>
+    /* Hero Section - Simple and Clean */
+    .hero-section {
+        padding: 60px 0;
+        background-color: #f5f5f5;
+        min-height: calc(100vh - 80px);
+    }
+
+    /* Page Header */
+    .page-title {
+        color: #1a1a1a;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+        color: #666;
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Feature Cards - Professional Style */
+    .feature-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 30px 20px;
+        text-align: center;
+        height: 100%;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    /* Card Icons - Simple Circles */
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .card-title {
+        color: #1a1a1a;
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .card-description {
+        color: #666;
+        font-size: 0.875rem;
+        margin-bottom: 20px;
+        min-height: 40px;
+    }
+
+    /* Button Styling - Solid Colors */
+    .feature-card .btn {
+        padding: 10px 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 4px;
+        border: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .feature-card .btn:hover {
+        opacity: 0.9;
+    }
+
+    .btn-primary {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .btn-success {
+        background-color: #2e7d32;
+        color: #fff;
+    }
+
+    .btn-warning {
+        background-color: #e65100;
+        color: #fff;
+    }
+
+    .btn-dark {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+
+    /* Info Cards - Simple Info Section */
+    .info-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .info-icon {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .info-title {
+        color: #1a1a1a;
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .info-description {
+        color: #666;
+        font-size: 0.875rem;
+        margin-bottom: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.875rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+        }
+
+        .hero-section {
+            padding: 40px 0;
+        }
+
+        .feature-card,
+        .info-card {
+            padding: 25px 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .card-description {
+            min-height: auto;
+        }
+    }
+</style>
+{% endblock %}

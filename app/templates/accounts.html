@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid px-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="page-title">Account Management</h2>
+            <p class="page-subtitle">View and manage all bank accounts</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-label">Total Accounts</div>
+                    <div class="stat-value">{{ accounts|length }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-label">Savings Accounts</div>
+                    <div class="stat-value">{{ accounts|selectattr('acc_type', 'equalto', 'SAVINGS')|list|length }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-label">Current Accounts</div>
+                    <div class="stat-value">{{ accounts|selectattr('acc_type', 'equalto', 'CURRENT')|list|length }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accounts Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="table-card">
+                <div class="card-header">
+                    <h5>All Accounts</h5>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search accounts..." onkeyup="searchTable()">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="accountsTable">
+                        <thead>
+                            <tr>
+                                <th>Account No</th>
+                                <th>Customer ID</th>
+                                <th>Type</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in accounts %}
+                            <tr>
+                                <td>{{ a.acc_no }}</td>
+                                <td>{{ a.cust_id }}</td>
+                                <td>
+                                    <span class="badge-{{ a.acc_type.lower() }}">
+                                        {{ a.acc_type }}
+                                    </span>
+                                </td>
+                                <td>₹{{ "%.2f"|format(a.balance) }}</td>
+                                <td>
+                                    {% if a.balance > 1000 %}
+                                        <span class="badge-active">Active</span>
+                                    {% else %}
+                                        <span class="badge-low">Low Balance</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Page Header */
+    .page-title {
+        color: #1a1a1a;
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .page-subtitle {
+        color: #666;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+    
+    /* Stat Cards */
+    .stat-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 1.25rem;
+        height: 100%;
+    }
+    
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .stat-value {
+        color: #1a1a1a;
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+    
+    /* Table Card */
+    .table-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        padding: 1.25rem;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .card-header h5 {
+        color: #1a1a1a;
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    
+    /* Search Box */
+    .search-box input {
+        background: #fff;
+        border: 1px solid #d0d0d0;
+        border-radius: 4px;
+        padding: 0.5rem 0.75rem;
+        color: #1a1a1a;
+        width: 250px;
+        font-size: 0.9rem;
+    }
+    
+    .search-box input:focus {
+        outline: none;
+        border-color: #999;
+    }
+    
+    .search-box input::placeholder {
+        color: #999;
+    }
+    
+    /* Table */
+    .table {
+        margin: 0;
+        color: #1a1a1a;
+    }
+    
+    .table thead {
+        background: #f8f8f8;
+    }
+    
+    .table thead th {
+        border-bottom: 2px solid #e0e0e0;
+        padding: 0.875rem 1rem;
+        font-weight: 600;
+        color: #333;
+        font-size: 0.875rem;
+        border-top: none;
+    }
+    
+    .table tbody td {
+        padding: 0.875rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        vertical-align: middle;
+        color: #333;
+        font-size: 0.9rem;
+    }
+    
+    .table tbody tr:hover {
+        background: #fafafa;
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    /* Badges */
+    .badge-savings {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 0.35rem 0.75rem;
+        border-radius: 3px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        display: inline-block;
+    }
+    
+    .badge-current {
+        background: #e3f2fd;
+        color: #1565c0;
+        padding: 0.35rem 0.75rem;
+        border-radius: 3px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        display: inline-block;
+    }
+    
+    .badge-active {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 0.35rem 0.75rem;
+        border-radius: 3px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+    
+    .badge-low {
+        background: #fff3e0;
+        color: #e65100;
+        padding: 0.35rem 0.75rem;
+        border-radius: 3px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .search-box input {
+            width: 100%;
+        }
+        
+        .card-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<script>
+    function searchTable() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('accountsTable');
+        const rows = table.getElementsByTagName('tr');
+        
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            const cells = row.getElementsByTagName('td');
+            let found = false;
+            
+            for (let j = 0; j < cells.length; j++) {
+                const cell = cells[j];
+                if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            row.style.display = found ? '' : 'none';
+        }
+    }
+</script>
+{% endblock %}
